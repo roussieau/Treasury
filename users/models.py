@@ -16,6 +16,6 @@ class CustomUser(AbstractUser):
     kot = models.ForeignKey(Kot, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.email
+        return self.get_full_name()
 
 
