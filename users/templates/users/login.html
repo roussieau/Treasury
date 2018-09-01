@@ -1,0 +1,9 @@
+{% load bootstrap4%}
+
+<h1> Se connecter </h1>
+{{error}}
+<form method="post" action=".">
+	{% csrf_token%}
+    {% bootstrap_form form%}
+	<input type="submit" value="Se connecter">
+</form>
