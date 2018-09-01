@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Kot
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -13,7 +13,8 @@ class CustomUserAdmin(UserAdmin):
     list_display = ['email', 'username', 'treasurer']
 
     fieldsets = UserAdmin.fieldsets + (
-            ('My fields', {'fields': ('treasurer',)}),
+            ('My fields', {'fields': ('treasurer','kot')}),
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Kot)
