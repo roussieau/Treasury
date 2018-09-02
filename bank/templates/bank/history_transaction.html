@@ -1,4 +1,15 @@
 {% extends 'index.html' %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{% url 'index' %}">Home</a>
+  </li>
+  <li class="breadcrumb-item ">Banque</li>
+  <li class="breadcrumb-item active">Historique des transactions</li>
+</ol>
+{% endblock%}
+
 {% block content %}
 <h1>Historique de vos transactions </h1>
 {% if user.balance < 0 %}
@@ -24,7 +35,7 @@
       <td>{{t.expense.description}}</td>
       <td>{{t.expense.added_by}}</td>
       {% if t.positive %}
-        <td>{{t.cost}}</td>
+        <td style="color:green">+{{t.cost}}</td>
       {% else %}
         <td style="color:red">-{{t.cost}}</td>
       {% endif %}

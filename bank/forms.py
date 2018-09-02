@@ -5,7 +5,7 @@ from users.models import CustomUser
 
 class ExpenseForm(ModelForm):
     users = forms.ModelMultipleChoiceField(CustomUser.objects.all(), label='Utilisateurs')
-    
+    paid_with_my_card = forms.BooleanField(label="Payé avec ma carte", required=False)
     class Meta: 
         model = Expense
         fields = ['cost', 'description']
