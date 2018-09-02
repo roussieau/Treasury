@@ -19,7 +19,8 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
-    def get_balance(self):
+    @property
+    def balance(self):
         listOfTransactions = Transaction.objects.filter(user=self)
         balance = 0
         for t in listOfTransactions:
@@ -28,3 +29,6 @@ class CustomUser(AbstractUser):
             else:
                 balance -= t.cost
         return balance
+
+    def get_transactions(self):
+        return Transaction.objects.filter(user=self).order_by('expense__date')[:30]

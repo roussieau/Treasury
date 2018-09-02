@@ -22,6 +22,9 @@ class Expense(models.Model):
             t = Transaction(cost=costPerPerson, expense=self, user=u)
             t.save()
             
+    def date_to_string(self):
+        date_with_timezone = timezone.localtime(self.date)
+        return '{:%d/%m/%y %H:%M}'.format(date_with_timezone)
 
 class Transaction(models.Model):
     cost = models.DecimalField(max_digits=6, decimal_places=2)

@@ -8,6 +8,7 @@ from .models import Expense
 def add_ticket(request):
     form = ExpenseForm(request.POST or None)
     bank_page = 'active'
+    print(request.user.get_transactions())
     if form.is_valid():
         listOfUsers = form.cleaned_data['users']
         e = form.save(commit=False)
@@ -18,3 +19,8 @@ def add_ticket(request):
         ticket_added = True
 
     return render(request, 'bank/add_ticket.html', locals())
+
+@login_required
+def history_of_my_transactions(request):
+    listOfTransactions = request.user.get_transactions()
+    return render(request, 'bank/history_transaction.html', locals())

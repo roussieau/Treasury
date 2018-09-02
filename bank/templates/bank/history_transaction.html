@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1>Historique de vos transactions </h1>
+{% if user.balance < 0 %}
+<div class="alert alert-danger" role="alert">
+{% else %}
+<div class="alert alert-info" role="alert">
+{% endif %}
+  Le solde de votre compte est de {{user.balance}}€
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Description</th>
+      <th scope="col">Ajouté par</th>
+      <th scope="col">Montant</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for t in listOfTransactions %}
+    <tr>
+      <td>{{t.expense.date_to_string}}</td>
+      <td>{{t.expense.description}}</td>
+      <td>{{t.expense.added_by}}</td>
+      {% if t.positive %}
+        <td>{{t.cost}}</td>
+      {% else %}
+        <td style="color:red">-{{t.cost}}</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -9,10 +9,10 @@ class BalanceTestCase(TestCase):
 		Transaction.objects.create(cost=5, user=user)
 		Transaction.objects.create(cost=10, user=user)
 		Transaction.objects.create(cost=18, positive=True, user=user)
-		self.assertEqual(user.get_balance(), 3) 
+		self.assertEqual(user.balance, 3) 
 
 	def test_user_balance_negative(self):
 		user = CustomUser.objects.create(username='julian')
 		Transaction.objects.create(cost=5, user=user)
 		Transaction.objects.create(cost=10, user=user)
-		self.assertEqual(user.get_balance(), -15) 
+		self.assertEqual(user.balance, -15) 
