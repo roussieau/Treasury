@@ -1,13 +1,30 @@
 {% extends 'index.html' %}
 {% load bootstrap4 %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+	  <a href="{% url 'index' %}">Home</a>
+	</li>
+	<li class="breadcrumb-item ">Banque</li>
+	<li class="breadcrumb-item active">Ajouter un ticket</li>
+</ol>
+{% endblock%}
 {% block content %}
+
+{% if ticket_added %}
+<div class="alert alert-success" role="alert">
+	Votre ticket a été ajouté avec succès !
+</div>
+{% else %}
 <h1>Ajouter un ticket </h1>
 <form action='.' method='post'>
     {% csrf_token %}
     {% bootstrap_form form%}
     {% buttons %}    
-        <button type='submit' class='btn btn-primary'>Submit</button>
+        <button type='submit' class='btn btn-primary btn-block'>Enregistrer</button>
     {% endbuttons %}
 </form>
+{% endif %}
 {% endblock%}
 

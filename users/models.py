@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from bank.models import Transaction
 
 # Create your models here.
 class Kot(models.Model):
@@ -18,4 +19,12 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
-
+    def get_balance(self):
+        listOfTransactions = Transaction.objects.filter(user=self)
+        balance = 0
+        for t in listOfTransactions:
+            if t.positive:
+                balance += t.cost
+            else:
+                balance -= t.cost
+        return balance

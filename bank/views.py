@@ -15,5 +15,6 @@ def add_ticket(request):
         e.kot = request.user.kot
         e.save()
         e.debit(listOfUsers)
+        ticket_added = True
 
     return render(request, 'bank/add_ticket.html', locals())

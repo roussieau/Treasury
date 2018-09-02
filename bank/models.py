@@ -1,14 +1,14 @@
 from django.db import models
-from users.models import CustomUser, Kot
 from django.utils import timezone
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 class Expense(models.Model):
     date = models.DateTimeField(default=timezone.now)
     description = models.TextField(max_length=300, blank=True)
-    cost = models.DecimalField(max_digits=6, decimal_places=2)
-    added_by = models.ForeignKey(CustomUser,on_delete=models.CASCADE, blank=True) 
-    kot = models.ForeignKey(Kot, on_delete=models.CASCADE)
+    cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)])
+    added_by = models.ForeignKey('users.CustomUser',on_delete=models.CASCADE, blank=True) 
+    kot = models.ForeignKey('users.Kot', on_delete=models.CASCADE)
 
     def __str__(self):
         date_with_timezone = timezone.localtime(self.date)
@@ -26,8 +26,8 @@ class Expense(models.Model):
 class Transaction(models.Model):
     cost = models.DecimalField(max_digits=6, decimal_places=2)
     positive = models.BooleanField(default=False)
-    expense = models.ForeignKey(Expense, on_delete=models.CASCADE)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    expense = models.ForeignKey(Expense, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
 
     def __str__(self):
         date_with_timezone = timezone.localtime(self.expense.date)
