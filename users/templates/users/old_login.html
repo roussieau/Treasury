@@ -1,0 +1,15 @@
+
+{% extends "index.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1> Se connecter </h1>
+{{error}}
+<form method="post" action=".">
+	{% csrf_token%}
+    {% bootstrap_form form%}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+    {% endbuttons %}
+</form>
+{% endblock %}

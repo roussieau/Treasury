@@ -7,7 +7,7 @@ from .models import Expense
 @login_required
 def add_ticket(request):
     form = ExpenseForm(request.POST or None)
-    print(form)
+    bank_page = 'active'
     if form.is_valid():
         listOfUsers = form.cleaned_data['users']
         e = form.save(commit=False)

@@ -1,4 +1,6 @@
+{% extends 'index.html' %}
 {% load bootstrap4 %}
+{% block content %}
 <h1>Ajouter un ticket </h1>
 <form action='.' method='post'>
     {% csrf_token %}
@@ -7,4 +9,5 @@
         <button type='submit' class='btn btn-primary'>Submit</button>
     {% endbuttons %}
 </form>
+{% endblock%}
 

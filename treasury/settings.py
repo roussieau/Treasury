@@ -25,13 +25,14 @@ SECRET_KEY = '19_awvan^ho+h^-o5sx5j*(zb!qb&v4%5j%u$+9v4tcxc(i8=s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'bank',
+    'home',
     'users',
 
     'bootstrap4',
@@ -59,7 +60,9 @@ ROOT_URLCONF = 'treasury.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +130,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL= 'users:login'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)

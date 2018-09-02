@@ -1,21 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import ConnexionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 
 # Create your views here.
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+
     form = ConnexionForm(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
-        user = authenticate(username=username, password=password)
+        user = authenticate(request, username=username, password=password)
         if not user:
             error = "Mauvais nom d'utilisateur ou mot de passe" 
+        else:
+            auth_login(request, user)
+            return redirect('index')
 
     return render(request, 'users/login.html', locals())
 
 @login_required
 def logout(request):
-    return render(request, 'users/logout.html', locals())
-
+    auth_logout(request)
+    return redirect('users:login')
