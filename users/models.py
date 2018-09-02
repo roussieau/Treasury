@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from bank.models import Transaction
+from bank.models import Transaction, Expense
 
 # Create your models here.
 class Kot(models.Model):
@@ -10,6 +10,15 @@ class Kot(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.name, self.year)
+
+    @property
+    def balance(self):
+        listOfExpenses = Expense.objects.filter(kot=self)
+        balance = 0
+        for e in listOfExpenses:
+            balance += e.cost
+
+        return balance
 
 class CustomUser(AbstractUser):
     # add additional fields in here

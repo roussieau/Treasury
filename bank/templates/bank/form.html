@@ -7,17 +7,17 @@
 	  <a href="{% url 'index' %}">Home</a>
 	</li>
 	<li class="breadcrumb-item ">Banque</li>
-	<li class="breadcrumb-item active">Ajouter un ticket</li>
+	<li class="breadcrumb-item active">{{page_name}}</li>
 </ol>
 {% endblock%}
 {% block content %}
 
 {% if ticket_added %}
 <div class="alert alert-success" role="alert">
-	Votre ticket a été ajouté avec succès !
+	Ajouté avec succès !
 </div>
 {% else %}
-<h1>Ajouter un ticket </h1>
+<h1>{{page_name}}</h1>
 <form action='.' method='post'>
     {% csrf_token %}
     {% bootstrap_form form%}

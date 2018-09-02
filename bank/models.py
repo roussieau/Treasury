@@ -5,8 +5,9 @@ from django.core.validators import MinValueValidator
 # Create your models here.
 class Expense(models.Model):
     date = models.DateTimeField(default=timezone.now)
-    description = models.TextField(max_length=300, blank=True)
+    description = models.CharField(max_length=60, blank=True)
     cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)])
+    positive = models.BooleanField(default=False)
     added_by = models.ForeignKey('users.CustomUser',on_delete=models.CASCADE, blank=True) 
     kot = models.ForeignKey('users.Kot', on_delete=models.CASCADE)
 
