@@ -45,17 +45,20 @@ def history_of_my_transactions(request):
     listOfTransactions = request.user.get_transactions()
     today = datetime.now()
     firstday = today - timedelta(30)
-    data = []
-    datelabel = []
+    label = []
+    value = []
     for i in range(1,31):
         currentDate = firstday + timedelta(i)
-        datelabel.append("{: %d/%m/%y}".format(currentDate))
-        data.append(int(balance_on_a_date(currentDate)))
+        label.append("{: %d/%m/%y}".format(currentDate))
+        value.append(int(balance_on_a_date(currentDate, request.user)))
+
+    data = {'label': label,
+            'value': value,
+            }
     return render(request, 'bank/history_transaction.html', locals())
 
-def balance_on_a_date(date):
-    listOfTransactions = Transaction.objects.filter(expense__date__lte=date)
-    print(date)
+def balance_on_a_date(date, user):
+    listOfTransactions = Transaction.objects.filter(expense__date__lte=date, user=user)
     return sum_transactions(listOfTransactions)
 
 def sum_transactions(listOfTransactions):
