@@ -42,11 +42,8 @@ def add_money(request):
 
 @login_required
 def history_of_my_transactions(request):
-    listOfTransactions = request.user.get_transactions()
-    today = datetime.now()
-    firstday = today - timedelta(30)
-    label = []
-    value = []
+    listOfTransactions = request.user.get_transactions
+    firstday = datetime.now() - timedelta(30)
     for i in range(1,31):
         currentDate = firstday + timedelta(i)
         label.append("{: %d/%m/%y}".format(currentDate))
@@ -56,6 +53,28 @@ def history_of_my_transactions(request):
             'value': value,
             }
     return render(request, 'bank/history_transaction.html', locals())
+
+@login_required
+def history_of_transactions(request):
+    firstday = datetime.now() - timedelta(30)
+    label = []
+    value1 = []
+    value2 = []
+    for i in range(1,31):
+        currentDate = firstday + timedelta(i)
+        label.append("{: %d/%m/%y}".format(currentDate))
+        value1.append(int(balance_on_a_date(currentDate, request.user)))
+        value2.append(int(balance_on_a_date_expense(currentDate, request.user.kot)))
+    data = {
+        'label': label,
+        'value1': value1,
+        'value2': value2,
+    }
+    return render(request, 'bank/history_transaction.html', locals())
+
+def balance_on_a_date_expense(date, kot):
+    listOfTransactions = Expense.objects.filter(date__lte=date, kot=kot)
+    return sum_transactions(listOfTransactions)
 
 def balance_on_a_date(date, user):
     listOfTransactions = Transaction.objects.filter(expense__date__lte=date, user=user)

@@ -51,6 +51,7 @@
   <div class="card-body">
     <canvas id="myAreaChart" width="100%" height="30"></canvas>
   </div></div>
+  {{data.value1}}
 {% endblock %}
 
 {% block script %}
@@ -66,18 +67,18 @@ var myLineChart = new Chart(ctx, {
   data: {
     labels: {{data.label|safe}},
     datasets: [{
-      label: "Solde du compte",
+      label: "Sessions",
       lineTension: 0.3,
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
-      pointRadius: 5,
-      pointBackgroundColor: "rgba(2,117,216,1)",
-      pointBorderColor: "rgba(255,255,255,0.8)",
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: "rgba(2,117,216,1)",
-      pointHitRadius: 50,
-      pointBorderWidth: 2,
-      data: {{data.value}},
+      data: {{data.value1}},
+    },
+    {
+      label: "Sessions",
+      lineTension: 0.3,
+      backgroundColor: "rgba(221,109,109,0.2)",
+      borderColor: "rgba(221,109,109,0.2)",
+      data: {{data.value2}},
     }],
   },
   options: {
@@ -107,6 +108,7 @@ var myLineChart = new Chart(ctx, {
     }
   }
 });
+
 
 </script>
 {% endblock%}
