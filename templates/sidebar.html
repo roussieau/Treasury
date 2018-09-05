@@ -14,6 +14,16 @@
     <div class="dropdown-menu show" aria-labelledby="pagesDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(5px, 56px, 0px);">
       <a class="dropdown-item" href="{% url 'bank:add_ticket' %}">Ajouter un ticket</a>
       <a class="dropdown-item" href="{% url 'bank:history_of_my_transactions' %}">Historique</a>
+      <a class="dropdown-item" href="{% url 'bank:charts' %}">Graphiques</a>
+    </div>
+  </li>
+  <li class="nav-item dropdown show ">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <i class="fas fa-bed"></i>
+      <span>Commu</span>
+    </a>
+    <div class="dropdown-menu show" aria-labelledby="pagesDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(5px, 56px, 0px);">
+      <a class="dropdown-item" href="{% url 'bank:add_ticket' %}">Ajouter un ticket</a>
     </div>
   </li>
   {% if user.treasurer %}

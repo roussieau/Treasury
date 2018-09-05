@@ -19,96 +19,31 @@
 {% endif %}
   Le solde de votre compte est de {{user.balance}}€
 </div>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Description</th>
-      <th scope="col">Ajouté par</th>
-      <th scope="col">Montant</th>
-    </tr>
-  </thead>
-  <tbody>
-  	{% for t in listOfTransactions %}
-    <tr>
-      <td>{{t.expense.date_to_string}}</td>
-      <td>{{t.expense.description}}</td>
-      <td>{{t.expense.added_by}}</td>
-      {% if t.positive %}
-        <td style="color:green">+{{t.cost}}</td>
-      {% else %}
-        <td style="color:red">-{{t.cost}}</td>
-      {% endif %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<div class="card mb-3">
-  <div class="card-header">
-    <i class="fas fa-chart-area"></i>
-    Solde des 30 derniers jours</div>
-  <div class="card-body">
-    <canvas id="myAreaChart" width="100%" height="30"></canvas>
-  </div></div>
-  {{data.value1}}
+<div class="table-responsive-sm">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Description</th>
+        <th scope="col">Ajouté par</th>
+        <th scope="col">Montant</th>
+      </tr>
+    </thead>
+    <tbody>
+    	{% for t in listOfTransactions %}
+      <tr>
+        <td>{{t.expense.date_to_string}}</td>
+        <td>{{t.expense.description}}</td>
+        <td>{{t.expense.added_by}}</td>
+        {% if t.positive %}
+          <td style="color:green">+{{t.cost}}</td>
+        {% else %}
+          <td style="color:red">-{{t.cost}}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
 
-{% block script %}
-<script type="text/javascript">
-  // Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#292b2c';
-
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: {{data.label|safe}},
-    datasets: [{
-      label: "Sessions",
-      lineTension: 0.3,
-      backgroundColor: "rgba(2,117,216,0.2)",
-      borderColor: "rgba(2,117,216,1)",
-      data: {{data.value1}},
-    },
-    {
-      label: "Sessions",
-      lineTension: 0.3,
-      backgroundColor: "rgba(221,109,109,0.2)",
-      borderColor: "rgba(221,109,109,0.2)",
-      data: {{data.value2}},
-    }],
-  },
-  options: {
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'date'
-        },
-        gridLines: {
-          display: false
-        },
-        ticks: {
-          maxTicksLimit: 7
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          maxTicksLimit: 5
-        },
-        gridLines: {
-          color: "rgba(0, 0, 0, .125)",
-        }
-      }],
-    },
-    legend: {
-      display: false
-    }
-  }
-});
-
-
-</script>
-{% endblock%}
