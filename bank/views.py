@@ -14,7 +14,7 @@ def add_ticket(request):
     if form.is_valid():
         listOfUsers = form.cleaned_data['users']
         e = form.save(commit=False)
-        e.added_by = request.user 
+        e.added_by = request.user
         e.kot = request.user.kot
         e.save()
         e.debit(listOfUsers)
@@ -42,20 +42,35 @@ def add_money(request):
 
 @login_required
 def history_of_my_transactions(request):
-    listOfTransactions = request.user.get_transactions()
-    today = datetime.now()
-    firstday = today - timedelta(30)
+    listOfTransactions = request.user.get_transactions
+    return render(request, 'bank/history_transaction.html', locals())
+
+@login_required
+def history_transactions_commu(request):
+    listOfTransactions = Expense.objects.filter(kot=request.user.kot).order_by('-date')
+    return render(request, 'bank/history_transaction.html', locals())
+
+@login_required
+def charts(request):
+    firstday = datetime.now() - timedelta(30)
     label = []
-    value = []
+    value1 = []
+    value2 = []
     for i in range(1,31):
         currentDate = firstday + timedelta(i)
         label.append("{: %d/%m/%y}".format(currentDate))
-        value.append(int(balance_on_a_date(currentDate, request.user)))
+        value1.append(int(balance_on_a_date(currentDate, request.user)))
+        value2.append(int(balance_on_a_date_expense(currentDate, request.user.kot)))
+    data = {
+        'label': label,
+        'value1': value1,
+        'value2': value2,
+    }
+    return render(request, 'bank/charts.html', locals())
 
-    data = {'label': label,
-            'value': value,
-            }
-    return render(request, 'bank/history_transaction.html', locals())
+def balance_on_a_date_expense(date, kot):
+    listOfTransactions = Expense.objects.filter(date__lte=date, kot=kot)
+    return sum_transactions(listOfTransactions)
 
 def balance_on_a_date(date, user):
     listOfTransactions = Transaction.objects.filter(expense__date__lte=date, user=user)
@@ -69,4 +84,3 @@ def sum_transactions(listOfTransactions):
         else:
             balance -= t.cost
     return balance
-
