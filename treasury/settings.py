@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'bank',
     'home',
+    'supper',
     'users',
 
     'bootstrap4',
