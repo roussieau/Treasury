@@ -33,12 +33,14 @@ def register(request):
         user.first_name = form.cleaned_data['firstname']
         user.last_name = form.cleaned_data['lastname']
         user.email = form.cleaned_data['mail']
+        user.kot = form.cleaned_data['kot']
         kot = form.cleaned_data['kot']
         if kot.password == form.cleaned_data['kotPassword']:
             user.save()
             user = authenticate(request, username=form.cleaned_data['username'],
                 password=form.cleaned_data['password1'])
             auth_login(request, user)
+            return redirect('index')
 
 
     return render(request, 'users/register.html', locals())
