@@ -27,8 +27,21 @@ def register(request):
     if request.user.is_authenticated:
         return redirect('index')
 
-    form = CustomUserCreationForm
-    return render(request, 'users/login.html', locals())
+    form = CustomUserCreationForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        user.first_name = form.cleaned_data['firstname']
+        user.last_name = form.cleaned_data['lastname']
+        user.email = form.cleaned_data['mail']
+        kot = form.cleaned_data['kot']
+        if kot.password == form.cleaned_data['kotPassword']:
+            user.save()
+            user = authenticate(request, username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'])
+            auth_login(request, user)
+
+
+    return render(request, 'users/register.html', locals())
 
 @login_required
 def logout(request):

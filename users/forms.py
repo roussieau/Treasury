@@ -13,6 +13,16 @@ class CustomUserCreationForm(UserCreationForm):
 		model = CustomUser
 		fields = UserCreationForm.Meta.fields 
 
+	def clean(self):
+		cleaned_data = super(CustomUserCreationForm, self).clean()
+		kot = cleaned_data['kot']
+		password = cleaned_data['kotPassword']
+
+		if kot.password != password:
+			self.add_error('kotPassword',
+				"Le mot de passe ne correspond à celui de votre kot.")
+		return cleaned_data
+
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:

@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{% url 'index' %}">Home</a>
+  </li>
+  <li class="breadcrumb-item ">Soupers</li>
+  <li class="breadcrumb-item active"><a href="{% url 'supper:planning' %}">Planning</a></li>
+  <li class="breadcrumb-item ">{{day}}</li>
+</ol>
+{% endblock%}
+
+{% block content %}
+<div class="alert alert-info" role="alert">
+  Le souper a couté {{expensesTotal}} €
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Poids</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in participations %}
+    <tr>
+        <td>{{p.user.get_full_name}}</td>
+        <td>{{p.weight}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td> TOTAL </td>
+        <td>{{count}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- edit presence -->
+<div class="row">
+    {% if presence %}
+    <div class="col-md-2">
+        <a class="btn btn-info btn-lg btn-block" href="{% url 'supper:up_weight' day.id %}">+</a>
+    </div>
+    <div class="col-md-8">
+        <a class="btn btn-danger btn-lg btn-block" href="{% url 'supper:switch_day' day.id%}" role="button">Je mange pas</a>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-info btn-lg btn-block" href="{% url 'supper:down_weight' day.id %}">-</a>
+    </div>
+    {% else %}
+    <div class="col-md-12">
+        <a class="btn btn-success btn-lg btn-block" href="{% url 'supper:switch_day' day.id%}" role="button">Je mange</a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- add ticket -->
+{% if not added %}
+<div class="row" style="margin-top:1.5em">
+  <div class="col-md-12">
+    <h3> Ajouter un ticket </h3>
+    {% load bootstrap4 %}
+    <form action="." method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary btn-block">Enregister</button>
+        {% endbuttons %}
+    </form>
+  </div>
+</div>
+{% else %}
+<div class="alert alert-success" role="alert">
+  Votre ticket a bien été ajouté ! 
+</div>
+{% endif %}
+{% endblock %}

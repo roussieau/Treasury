@@ -12,7 +12,7 @@
 
     <link rel="icon" type="image/png" href="{% static 'img/bubulle.png' %}" />
 
-    <title>Treasury - Connexion</title>
+    <title>Treasury - Inscription</title>
 
     <!-- Bootstrap core CSS-->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -29,17 +29,17 @@
     {% load bootstrap4 %}
     <div class="container">
         <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Connexion à la trésorerie</div>
+        <div class="card-header">Inscription à la trésorerie</div>
         <div class="card-body">
           <form method="post" action=".">
             {% csrf_token%}
             {% bootstrap_form form%}
             {% buttons %}
-              <button type="submit" class="btn btn-info btn-block">Se connecter</button>
+              <button type="submit" class="btn btn-info btn-block">S'inscrire</button>
             {% endbuttons %}
           </form>
           <div class="text-center">
-            <a class="d-block small mt-3" href="{% url 'users:register' %}">Créer un compte</a>
+            <a class="d-block small mt-3" href="{% url 'users:login' %}">Se connecter</a>
           </div>
         </div>
       </div>

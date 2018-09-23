@@ -1,7 +1,17 @@
 {% extends 'index.html' %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{% url 'index' %}">Home</a>
+  </li>
+  <li class="breadcrumb-item ">Soupers</li>
+  <li class="breadcrumb-item active">Planning</li>
+</ol>
+{% endblock%}
+
 {% block content %}
-<table class="table">
+<table class="table table-sm">
   <thead>
     <tr>
       <th scope="col">Lundi</th>
@@ -14,9 +24,9 @@
     <tr>
     {% for day in days %}
       {% if day.presence %}
-        <td style="background-color: rgba(119,237,129, 0.5)"><a href="#">{{day.day}}</a></td>
+        <td style="background-color: rgba(119,237,129, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
       {% else %}
-        <td style="background-color: rgba(237,33,33, 0.5)"><a href="#">{{day.day}}</a></td>
+        <td style="background-color: rgba(237,33,33, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
       {% endif %}
     {% if forloop.counter|divisibleby:4%}
     </tr>
