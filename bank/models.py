@@ -10,6 +10,7 @@ class Expense(models.Model):
     positive = models.BooleanField(default=False)
     added_by = models.ForeignKey('users.CustomUser',on_delete=models.CASCADE, blank=True) 
     kot = models.ForeignKey('users.Kot', on_delete=models.CASCADE)
+    day = models.ForeignKey('supper.Day',on_delete=models.CASCADE, blank=True, null=True) 
 
     def __str__(self):
         date_with_timezone = timezone.localtime(self.date)

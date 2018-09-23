@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ConnexionForm
+from .forms import ConnexionForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
@@ -22,6 +22,17 @@ def login(request):
             return redirect('index')
 
     return render(request, 'users/login.html', locals())
+
+def register(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+
+    form = CustomUserCreationForm(request.POST or None)
+    if form.is_valid():
+        print('coucou')
+
+    return render(request, 'users/register.html', locals())
+
 
 @login_required
 def logout(request):
