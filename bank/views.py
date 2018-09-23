@@ -8,36 +8,41 @@ from datetime import datetime, timedelta, date
 @login_required
 def add_ticket(request):
     page_name = 'Ajouter un ticket'
-    form = ExpenseForm(request.POST or None, request.user)
+    form = ExpenseForm(user=request.user)
     bank_page = 'active'
-    if form.is_valid():
-        listOfUsers = form.cleaned_data['users']
-        e = form.save(commit=False)
-        e.added_by = request.user
-        e.kot = request.user.kot
-        e.save()
-        e.debit(listOfUsers)
-        if form.cleaned_data['paid_with_my_card']:
-            Transaction.objects.create(cost=e.cost, positive=True,
-                expense=e, user=e.added_by)
-        ticket_added = True
+    if request.POST:
+        form = ExpenseForm(request.POST, request.user)
+        if form.is_valid():
+            listOfUsers = form.cleaned_data['users']
+            e = form.save(commit=False)
+            e.added_by = request.user
+            e.kot = request.user.kot
+            e.save()
+            e.debit(listOfUsers)
+            if form.cleaned_data['paid_with_my_card']:
+                Transaction.objects.create(cost=e.cost, positive=True,
+                    expense=e, user=e.added_by)
+            ticket_added = True
 
     return render(request, 'bank/form.html', locals())
 
 @login_required
 def add_money(request):
     page_name = "Ajouter de l'argent"
-    form = AddMoneyForm(request.POST or None, request.user)
-    if form.is_valid() and request.user.treasurer:
-        e = form.save(commit=False)
-        e.positive = True
-        e.added_by = request.user
-        e.kot = request.user.kot
-        e.save()
-        Transaction.objects.create(cost=e.cost, positive=True,
-            expense=e, user=form.cleaned_data['user'])
-        ticket_added = True
-    return render(request, 'bank/form.html', locals())
+    form = AddMoneyForm(user=request.user)
+
+    if request.POST:
+        form = AddMoneyForm(request.POST, request.user)
+        if form.is_valid() and request.user.treasurer:
+            e = form.save(commit=False)
+            e.positive = True
+            e.added_by = request.user
+            e.kot = request.user.kot
+            e.save()
+            Transaction.objects.create(cost=e.cost, positive=True,
+                expense=e, user=form.cleaned_data['user'])
+            ticket_added = True
+        return render(request, 'bank/form.html', locals())
 
 @login_required
 def history_of_my_transactions(request):

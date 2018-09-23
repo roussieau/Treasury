@@ -17,7 +17,7 @@ class ExpenseForm(ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(ExpenseForm, self).__init__(*args, **kwargs)
-        self.fields['user'].queryset = CustomUser.objects.filter(kot=user.kot)
+        self.fields['users'].queryset = CustomUser.objects.filter(kot=user.kot)
 
 class AddMoneyForm(ModelForm):
     user = forms.ModelChoiceField(CustomUser.objects.none(), label='Utilisateur')
