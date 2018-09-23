@@ -2,3 +2,4 @@ db.sqlite3
 *.swp
 __pycache__/
 .DS_STORE
+settings.py
