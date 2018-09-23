@@ -8,9 +8,8 @@ from datetime import datetime, timedelta, date
 @login_required
 def add_ticket(request):
     page_name = 'Ajouter un ticket'
-    form = ExpenseForm(request.POST or None)
+    form = ExpenseForm(request.POST or None, request.user)
     bank_page = 'active'
-    print(request.user.get_transactions())
     if form.is_valid():
         listOfUsers = form.cleaned_data['users']
         e = form.save(commit=False)
@@ -28,7 +27,7 @@ def add_ticket(request):
 @login_required
 def add_money(request):
     page_name = "Ajouter de l'argent"
-    form = AddMoneyForm(request.POST or None)
+    form = AddMoneyForm(request.POST or None, request.user)
     if form.is_valid() and request.user.treasurer:
         e = form.save(commit=False)
         e.positive = True
