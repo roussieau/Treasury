@@ -25,10 +25,6 @@ def day(request, id):
     for i in participations:
         count += i.weight
 
-    expenses = Expense.objects.filter(day=day, kot=request.user.kot)
-    expensesTotal = 0
-    for i in expenses:
-        expensesTotal += i.cost
     #Form management
     form = DayExpenseForm(request.POST or None)
     if form.is_valid():
@@ -45,6 +41,11 @@ def day(request, id):
         for i in participations:
             Transaction.objects.create(user=i.user, expense=e, cost=i.weight*AmountPerPerson)
         added = True
+
+    expenses = Expense.objects.filter(day=day, kot=request.user.kot)
+    expensesTotal = 0
+    for i in expenses:
+        expensesTotal += i.cost
     return render(request, 'supper/day.html', locals())
 
 @login_required()
