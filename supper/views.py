@@ -19,7 +19,7 @@ def planning(request):
 @login_required()
 def day(request, id):
     day = Day.objects.get(id=id)
-    participations = Participation.objects.filter(user__kot = request.user.kot, day=id)
+    participations = Participation.objects.filter(user__kot = request.user.kot, day=id).order_by('user__first_name', 'user__last_name')
     presence = Participation.objects.filter(user=request.user, day=id).exists()
     count = 0
     for i in participations:
