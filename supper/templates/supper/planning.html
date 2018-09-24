@@ -11,29 +11,31 @@
 {% endblock%}
 
 {% block content %}
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th scope="col">Lundi</th>
-      <th scope="col">Mardi</th>
-      <th scope="col">Mercredi</th>
-      <th scope="col">Jeudi</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-    {% for day in days %}
-      {% if day.presence %}
-        <td style="background-color: rgba(119,237,129, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
-      {% else %}
-        <td style="background-color: rgba(237,33,33, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
+<div class="table-responsive">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Lundi</th>
+        <th scope="col">Mardi</th>
+        <th scope="col">Mercredi</th>
+        <th scope="col">Jeudi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      {% for day in days %}
+        {% if day.presence %}
+          <td style="background-color: rgba(119,237,129, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
+        {% else %}
+          <td style="background-color: rgba(237,33,33, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
+        {% endif %}
+      {% if forloop.counter|divisibleby:4%}
+      </tr>
+      <tr>
       {% endif %}
-    {% if forloop.counter|divisibleby:4%}
-    </tr>
-    <tr>
-    {% endif %}
-    {% endfor %}
-    </tr>
-  </tbody>
-</table>
+      {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+</div>
 {% endblock %}
