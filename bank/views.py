@@ -10,7 +10,6 @@ def add_ticket(request):
     page_name = 'Ajouter un ticket'
     bank_page = 'active'
     if request.POST:
-        print(request.POST)
         form = ExpenseForm(request.user, request.POST)
         if form.is_valid():
             listOfUsers = form.cleaned_data['users']
@@ -44,7 +43,7 @@ def add_money(request):
             Transaction.objects.create(cost=e.cost, positive=True,
                 expense=e, user=form.cleaned_data['user'])
             ticket_added = True
-        return render(request, 'bank/form.html', locals())
+    return render(request, 'bank/form.html', locals())
 
 @login_required
 def history_of_my_transactions(request):
