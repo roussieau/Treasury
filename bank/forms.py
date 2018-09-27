@@ -15,7 +15,7 @@ class ExpenseForm(ModelForm):
         	"cost": "Montant",
     	}
 
-    def __init__(self, users, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super(ExpenseForm, self).__init__(*args, **kwargs)
         self.fields['users'].queryset = CustomUser.objects.filter(kot=user.kot)
 
