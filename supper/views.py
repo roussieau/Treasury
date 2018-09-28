@@ -81,4 +81,4 @@ def downWeight(request, id):
 def canChange(id):
     day = Day.objects.get(id=id)
     limit = dt(year=day.date.year, month=day.date.month, day=day.date.day, hour=16)
-    return dt.today() < limit
+    return dt.today() < limit and not Expense.objects.filter(day=day).exists()

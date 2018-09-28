@@ -12,9 +12,11 @@
 {% endblock%}
 
 {% block content %}
+{% if expensesTotal > 0%}
 <div class="alert alert-info" role="alert">
   Le souper a couté {{expensesTotal}} €
 </div>
+{% endif %}
 <table class="table">
   <thead>
     <tr>
