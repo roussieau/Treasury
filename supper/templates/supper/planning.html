@@ -24,7 +24,9 @@
     <tbody>
       <tr>
       {% for day in days %}
-        {% if day.presence %}
+        {% if not day.canChoose %}
+          <td ><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
+        {% elif day.presence %}
           <td style="background-color: rgba(119,237,129, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
         {% else %}
           <td style="background-color: rgba(237,33,33, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>

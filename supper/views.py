@@ -15,7 +15,8 @@ def planning(request):
         day = d
         presence = d.presence(request.user)
         days.append({'day':day,
-                     'presence':presence})
+                     'presence':presence,
+                     'canChoose':canChange(day.id)})
     return render(request, 'supper/planning.html', locals())
 
 @login_required()
