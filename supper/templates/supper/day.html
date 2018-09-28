@@ -37,6 +37,7 @@
 </table>
 
 <!-- edit presence -->
+{% if canChoose %}
 <div class="row">
     {% if presence %}
     <div class="col-md-2">
@@ -54,6 +55,7 @@
     </div>
     {% endif %}
 </div>
+{% endif %}
 
 <!-- add ticket -->
 {% if not added %}
