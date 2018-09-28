@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ExpenseForm, AddMoneyForm
 from .models import Expense, Transaction
 from datetime import datetime, timedelta, date
+from users.models import CustomUser
 
 # Create your views here.
 @login_required
@@ -44,6 +45,21 @@ def add_money(request):
                 expense=e, user=form.cleaned_data['user'])
             ticket_added = True
     return render(request, 'bank/form.html', locals())
+
+@login_required
+def status(request):
+    listOfUsers = CustomUser.objects.filter(kot=request.user.kot).order_by('first_name', 'last_name')
+    status = []
+    for user in listOfUsers:
+        transactions = Transaction.objects.filter(user=user)
+        user_balance = 0
+        for transaction in transactions:
+            if transaction.positive:
+                user_balance += transaction.cost
+            else:
+                user_balance -= transaction.cost
+        status.append({'name' : user.get_full_name(), 'balance' : user_balance})
+    return render(request, 'bank/status.html', {'status' : status})
 
 @login_required
 def history_of_my_transactions(request):

@@ -8,4 +8,5 @@ urlpatterns = [
     path('history', views.history_of_my_transactions, name='history_of_my_transactions'),
     path('history/commu', views.history_transactions_commu, name='history_commu'),
     path('charts', views.charts, name='charts'),
+    path('status', views.status, name='status'),
 ]
