@@ -50,6 +50,10 @@ def day(request, id):
     for i in expenses:
         expensesTotal += i.cost
     canChoose = canChange(id)
+    if canChoose:
+        diff = dt(year=day.date.year, month=day.date.month, day=day.date.day, hour=16) - dt.today()
+        remainingTime = "Il vous reste {} jours, {} heures et {} minutes pour vous décider".format(
+            diff.days, diff.seconds //3600 , diff.seconds % 3600 // 60)
     return render(request, 'supper/day.html', locals())
 
 @login_required()
