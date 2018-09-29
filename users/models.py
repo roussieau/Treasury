@@ -25,6 +25,7 @@ class CustomUser(AbstractUser):
     # add additional fields in here
     treasurer = models.BooleanField(default = False)
     kot = models.ForeignKey(Kot, on_delete=models.CASCADE, null=True)
+    internal = models.BooleanField(default=False)
 
     def __str__(self):
         return self.get_full_name()

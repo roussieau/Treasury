@@ -7,6 +7,7 @@ class CustomUserCreationForm(UserCreationForm):
 	firstname = forms.CharField(label="Prénom", max_length=30)
 	lastname = forms.CharField(label="Nom", max_length=30)
 	mail = forms.EmailField(label="Adresse mail", max_length=100)
+	internal = forms.BooleanField(label="Interne")
 	kot = forms.ModelChoiceField(Kot.objects.all())
 	kotPassword = forms.CharField(label="Mot de passe du kot", max_length=30)
 
@@ -26,18 +27,18 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomUserChangeForm(UserChangeForm):
 
-    class Meta:
-        model = CustomUser
-        fields = ('username', 'email', 'treasurer')
+	class Meta:
+		model = CustomUser
+		fields = ('username', 'email', 'treasurer')
 
 class ConnexionForm(forms.Form):
-    username = forms.CharField(label="Nom d'utilisateur", max_length=30)
-    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+	username = forms.CharField(label="Nom d'utilisateur", max_length=30)
+	password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
 
-    def clean(self):
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        if not user or not user.is_active:
-            raise forms.ValidationError("La combinaison nom d'utilisateur/mot de passe est invalide")
-        return self.cleaned_data
+	def clean(self):
+		username = self.cleaned_data.get('username')
+		password = self.cleaned_data.get('password')
+		user = authenticate(username=username, password=password)
+		if not user or not user.is_active:
+			raise forms.ValidationError("La combinaison nom d'utilisateur/mot de passe est invalide")
+		return self.cleaned_data

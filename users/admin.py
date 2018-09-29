@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ['first_name', 'last_name', 'kot' ,'treasurer']
 
     fieldsets = UserAdmin.fieldsets + (
-            ('My fields', {'fields': ('treasurer','kot')}),
+            ('My fields', {'fields': ('treasurer', 'internal', 'kot')}),
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)

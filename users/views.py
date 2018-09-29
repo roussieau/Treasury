@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from datetime import datetime
+from supper.models import Participation, Day
 
 # Create your views here.
 def login(request):
@@ -33,10 +35,15 @@ def register(request):
         user.first_name = form.cleaned_data['firstname']
         user.last_name = form.cleaned_data['lastname']
         user.email = form.cleaned_data['mail']
+        user.internal = form.cleaned_data['internal']
         user.kot = form.cleaned_data['kot']
         kot = form.cleaned_data['kot']
         if kot.password == form.cleaned_data['kotPassword']:
             user.save()
+            if user.internal:
+                days = Day.objects.filter(date__gt=datetime.today())
+                for day in days:
+                    Participation.objects.create(user=user, day=day)
             user = authenticate(request, username=form.cleaned_data['username'],
                 password=form.cleaned_data['password1'])
             auth_login(request, user)
