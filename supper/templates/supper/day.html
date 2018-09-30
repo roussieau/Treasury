@@ -12,6 +12,7 @@
 {% endblock%}
 
 {% block content %}
+<h2>Souper du {{day.date}} (S{{day.week}})</h2>
 {% if expensesTotal > 0%}
 <div class="alert alert-info" role="alert">
   Le souper a couté {{expensesTotal}} €
