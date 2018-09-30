@@ -11,10 +11,18 @@
 {% endblock%}
 
 {% block content %}
+<h1> Planning des soupers</h1>
+<p> Légende : </p>
+<ul>
+  <li><span class="badge badge-success">Je mange</span> </li>
+  <li><span class="badge badge-danger">Je mange pas</span></li>
+  <li><span class="badge badge-warning"> Il n'est plus possible de modifier son choix</span></li>
+</ul>
 <div class="table-responsive">
-  <table class="table table-sm">
-    <thead>
+  <table class="table table-sm ">
+    <thead class="thead-dark">
       <tr>
+        <th scope="col">#</th>
         <th scope="col">Lundi</th>
         <th scope="col">Mardi</th>
         <th scope="col">Mercredi</th>
@@ -24,12 +32,16 @@
     <tbody>
       <tr>
       {% for day in days %}
+
+        {% if forloop.counter|add:-1|divisibleby:4%}
+          <th scope="row">S{{day.day.week}}</th>
+        {% endif %}
         {% if not day.canChoose %}
-          <td ><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
+          <td ><span class="badge badge-warning"><a href="{% url 'supper:day' day.day.id %}" class="planning">{{day.day.date}}</a></span></td>
         {% elif day.presence %}
-          <td style="background-color: rgba(119,237,129, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
+          <td><span class="badge badge-success"><a href="{% url 'supper:day' day.day.id %}" class="planning">{{day.day.date}}</a></span></td>
         {% else %}
-          <td style="background-color: rgba(237,33,33, 0.5)"><a href="{% url 'supper:day' day.day.id %}">{{day.day}}</a></td>
+          <td ><span class="badge badge-danger"><a href="{% url 'supper:day' day.day.id %}" class="planning">{{day.day.date}}</a></span></td>
         {% endif %}
       {% if forloop.counter|divisibleby:4%}
       </tr>
