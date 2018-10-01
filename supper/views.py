@@ -16,7 +16,7 @@ def planning(request):
         presence = d.presence(request.user)
         days.append({'day':day,
                      'presence':presence,
-                     'canChoose':canChange(day.id)})
+                     'canChoose':canChange(day.id, request.user.kot)})
     return render(request, 'supper/planning.html', locals())
 
 @login_required()
@@ -49,7 +49,7 @@ def day(request, id):
     expensesTotal = 0
     for i in expenses:
         expensesTotal += i.cost
-    canChoose = canChange(id)
+    canChoose = canChange(id, request.user.kot)
     if canChoose:
         diff = dt(year=day.date.year, month=day.date.month, day=day.date.day, hour=16) - dt.today()
         remainingTime = "Il vous reste {} jours, {} heures et {} minutes pour vous décider".format(
@@ -58,7 +58,7 @@ def day(request, id):
 
 @login_required()
 def switch(request, id):
-    if canChange(id):
+    if canChange(id, request.user.kot):
         if Participation.objects.filter(user=request.user, day=id).exists(): 
             Participation.objects.filter(user=request.user, day=id).delete()
         else:
@@ -68,7 +68,7 @@ def switch(request, id):
 
 @login_required()
 def upWeight(request, id):
-    if canChange(id):
+    if canChange(id, request.user.kot):
         p = Participation.objects.get(day=id, user=request.user)
         p.weight += 1
         p.save()
@@ -76,14 +76,14 @@ def upWeight(request, id):
 
 @login_required()
 def downWeight(request, id):
-    if canChange(id):
+    if canChange(id, request.user.kot):
         p = Participation.objects.get(day=id, user=request.user)
         if p.weight > 1 :
             p.weight -= 1
         p.save()
     return redirect('supper:day', id=id)
 
-def canChange(id):
+def canChange(id, kot):
     day = Day.objects.get(id=id)
     limit = dt(year=day.date.year, month=day.date.month, day=day.date.day, hour=16)
-    return dt.today() < limit and not Expense.objects.filter(day=day).exists()
+    return dt.today() < limit and not Expense.objects.filter(day=day, kot=kot).exists()
