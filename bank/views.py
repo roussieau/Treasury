@@ -47,6 +47,12 @@ def add_money(request):
     return render(request, 'bank/form.html', locals())
 
 @login_required
+def expenses_history(request):
+    expenses = Expense.objects.filter(kot=request.user.kot).order_by('date')
+    return render(request, 'bank/history_expenses.html', locals())
+
+
+@login_required
 def status(request):
     listOfUsers = CustomUser.objects.filter(kot=request.user.kot).order_by('first_name', 'last_name')
     status = []

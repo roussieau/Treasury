@@ -39,7 +39,13 @@
     <div class="dropdown-menu " aria-labelledby="pagesDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(5px, 56px, 0px);">
       <a class="dropdown-item" href="{% url 'bank:add_money' %}">Ajouter de l'argent</a>
       <a class="dropdown-item" href="{% url 'bank:status' %}">Statuts</a>
+      <a class="dropdown-item" href="{% url 'bank:expenses_history' %}">Historique</a>
     </div>
   </li>
   {% endif %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'feedback:index' %}">
+    <i class="fas fa-thumbs-up"></i>
+    <span>Feedback</span></a>
+  </li>
 </ul>

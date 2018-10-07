@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{% url 'index' %}">Home</a>
+  </li>
+  <li class="breadcrumb-item ">Trésorier</li>
+  <li class="breadcrumb-item active">Historique des transactions</li>
+</ol>
+{% endblock%}
+
+{% block content %}
+<h1> Historique des dépenses </h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Description</th>
+      <th scope="col">Coût</th>
+      <th scope="col">Positif</th>
+      <th scope="col">Ajouté par</th>
+      <th scope="col">Souper</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for expense in expenses %}
+    <tr>
+      <th scope="row">{{expense.date}}</th>
+      <td>{{expense.description}}</td>
+      <td>{{expense.cost}}</td>
+      <td>{{expense.positive}}</td>
+      <td>{{expense.added_by}}</td>
+      <td>{{expense.day}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
