@@ -48,7 +48,7 @@ def add_money(request):
 
 @login_required
 def expenses_history(request):
-    expenses = Expense.objects.filter(kot=request.user.kot).order_by('date')
+    expenses = Expense.objects.filter(kot=request.user.kot).order_by('-date')
     return render(request, 'bank/history_expenses.html', locals())
 
 
