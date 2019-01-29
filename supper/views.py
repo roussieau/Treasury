@@ -9,7 +9,7 @@ import datetime
 # Create your views here.
 @login_required()
 def planning(request):
-    daysObject = Day.objects.all()
+    daysObject = Day.objects.filter(visible=True)
     days = []
     for d in daysObject:
         day = d

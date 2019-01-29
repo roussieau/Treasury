@@ -71,8 +71,7 @@ def status(request):
 @login_required
 def history_of_my_transactions(request):
     listOfTransactions = request.user.get_transactions()
-    print(listOfTransactions)
-    paginator = Paginator(listOfTransactions, 1)
+    paginator = Paginator(listOfTransactions, 20)
 
     page = request.GET.get('page')
     transactions = paginator.get_page(page)

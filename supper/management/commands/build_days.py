@@ -15,4 +15,5 @@ class Command(BaseCommand):
         
         for i in range(0, options['nbrOfWeek']):
             for j in range(0, 4):
-                Day.objects.create(date=(firstDate + timedelta(days=i*7+j)), week=options['start']+i)
+                Day.objects.create(date=(firstDate + timedelta(days=i*7+j)), 
+                        week=options['start']+i, visible=True)
