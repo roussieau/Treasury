@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator
 class Day(models.Model):
     date = models.DateField()
     week = models.IntegerField(default=0)
+    visible = models.BooleanField(default=False)
 
     def __str__(self):
         return 'S{} - {: %d/%m/%y}'.format(self.week, self.date)
