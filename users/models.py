@@ -42,4 +42,4 @@ class CustomUser(AbstractUser):
         return balance
 
     def get_transactions(self):
-        return Transaction.objects.filter(user=self).order_by('-expense__date')[:30]
+        return Transaction.objects.filter(user=self).order_by('-expense__date')

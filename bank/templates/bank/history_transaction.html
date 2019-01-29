@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-    	{% for t in listOfTransactions %}
+    	{% for t in transactions %}
       <tr>
         <td>{{t.expense.date_to_string}}</td>
         <td>{{t.expense.description}}</td>
@@ -44,6 +44,23 @@
       {% endfor %}
     </tbody>
   </table>
+<div class="row">
+    <div class="col-md-12" style="text-align:center">
+        {% if transactions.has_previous %}
+            <a class="btn btn-primary" role="button"href="?page=1">&laquo; first</a>
+            <a class="btn btn-primary" role="button"href="?page={{ transactions.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ transactions.number }} sur {{ transactions.paginator.num_pages }}
+        </span>
+
+        {% if transactions.has_next %}
+            <a class="btn btn-primary" role="button" href="?page={{ transactions.next_page_number }}">next</a>
+            <a class="btn btn-primary" role="button"href="?page={{ transactions.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </div>
+</div>
 </div>
 {% endblock %}
 

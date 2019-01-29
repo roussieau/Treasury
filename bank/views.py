@@ -4,6 +4,7 @@ from .forms import ExpenseForm, AddMoneyForm
 from .models import Expense, Transaction
 from datetime import datetime, timedelta, date
 from users.models import CustomUser
+from django.core.paginator import Paginator
 
 # Create your views here.
 @login_required
@@ -69,7 +70,12 @@ def status(request):
 
 @login_required
 def history_of_my_transactions(request):
-    listOfTransactions = request.user.get_transactions
+    listOfTransactions = request.user.get_transactions()
+    print(listOfTransactions)
+    paginator = Paginator(listOfTransactions, 1)
+
+    page = request.GET.get('page')
+    transactions = paginator.get_page(page)
     return render(request, 'bank/history_transaction.html', locals())
 
 @login_required

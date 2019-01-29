@@ -5,9 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
-"django-bootstrap4" = "*"
+django-simple-sso = "*"
+django-bootstrap4 = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
