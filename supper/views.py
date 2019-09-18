@@ -43,6 +43,9 @@ def day(request, id):
         AmountPerPerson = e.cost / count
         for i in participations:
             Transaction.objects.create(user=i.user, expense=e, cost=i.weight*AmountPerPerson)
+        if form.cleaned_data['paid_with_my_card']:
+            Transaction.objects.create(cost=e.cost, positive=True,
+                expense=e, user=e.added_by)
         added = True
 
     expenses = Expense.objects.filter(day=day, kot=request.user.kot)
@@ -59,7 +62,7 @@ def day(request, id):
 @login_required()
 def switch(request, id):
     if canChange(id, request.user.kot):
-        if Participation.objects.filter(user=request.user, day=id).exists(): 
+        if Participation.objects.filter(user=request.user, day=id).exists():
             Participation.objects.filter(user=request.user, day=id).delete()
         else:
             day = Day.objects.get(id=id)
