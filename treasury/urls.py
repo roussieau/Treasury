@@ -16,10 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def change_password_success(request):
+    return redirect('index')
+
+    
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('bank/', include('bank.urls')),
     path('supper/', include('supper.urls')),
     path('users/', include('users.urls')),
     path('', include('home.urls')),
+
+    path('users/password_change/done/', change_password_success, name='password_change_done'),
+    path('users/', include('django.contrib.auth.urls')),
 ]

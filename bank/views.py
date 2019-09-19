@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import ExpenseForm, AddMoneyForm
 from .models import Expense, Transaction
@@ -51,6 +52,12 @@ def add_money(request):
 def expenses_history(request):
     expenses = Expense.objects.filter(kot=request.user.kot).order_by('-date')
     return render(request, 'bank/history_expenses.html', locals())
+
+@login_required
+def expense_delete(request, id):
+    expense = Expense.objects.get(id=id)
+    expense.remove()
+    return redirect('bank:expenses_history')
 
 
 @login_required
