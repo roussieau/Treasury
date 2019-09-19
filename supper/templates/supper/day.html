@@ -13,6 +13,7 @@
 
 {% block content %}
 <h2>Souper du {{day.date}} (S{{day.week}})</h2>
+{% if participations %}
 {% if expensesTotal > 0%}
 <div class="alert alert-info" role="alert">
   Le souper a couté {{expensesTotal}} €
@@ -82,7 +83,12 @@
 </div>
 {% else %}
 <div class="alert alert-success" role="alert">
-  Votre ticket a bien été ajouté ! 
+  Votre ticket a bien été ajouté !
+</div>
+{% endif %}
+{% else %}
+<div class="alert alert-warning" role="alert">
+  Personne n'est inscrit à ce souper !
 </div>
 {% endif %}
 {% endblock %}
