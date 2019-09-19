@@ -8,9 +8,9 @@ class Expense(models.Model):
     description = models.CharField(max_length=60, blank=True)
     cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)])
     positive = models.BooleanField(default=False)
-    added_by = models.ForeignKey('users.CustomUser',on_delete=models.CASCADE, blank=True) 
+    added_by = models.ForeignKey('users.CustomUser',on_delete=models.CASCADE, blank=True)
     kot = models.ForeignKey('users.Kot', on_delete=models.CASCADE)
-    day = models.ForeignKey('supper.Day',on_delete=models.CASCADE, blank=True, null=True) 
+    day = models.ForeignKey('supper.Day',on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         date_with_timezone = timezone.localtime(self.date)
@@ -23,7 +23,12 @@ class Expense(models.Model):
         for u in users:
             t = Transaction(cost=costPerPerson, expense=self, user=u)
             t.save()
-            
+
+    # Remove all transactions related to this expense + delete expense
+    def remove(self):
+        Transaction.objects.filter(expense=self).delete()
+        self.delete()
+
     def date_to_string(self):
         date_with_timezone = timezone.localtime(self.date)
         return '{:%d/%m/%y %H:%M}'.format(date_with_timezone)

@@ -21,6 +21,7 @@
       <th scope="col">Positif</th>
       <th scope="col">Ajouté par</th>
       <th scope="col">Souper</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -32,9 +33,13 @@
       <td>{{expense.positive}}</td>
       <td>{{expense.added_by}}</td>
       <td>{{expense.day}}</td>
+      <td>
+        <a class="btn" href="{% url 'bank:expense_delete' id=expense.id %}" style="color: red;">
+          <i class="fas fa-trash"></i>
+        </a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 {% endblock %}
-
