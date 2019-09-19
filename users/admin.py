@@ -16,5 +16,15 @@ class CustomUserAdmin(UserAdmin):
             ('My fields', {'fields': ('treasurer', 'internal', 'kot')}),
     )
 
+
+def the_interns_eat(modeladmin, request, queryset):
+    for kot in queryset:
+        kot.the_interns_eat()
+the_interns_eat.short_description = "Enregistrer les internes à tous les soupers par défaut"
+
+class KotAdmin(admin.ModelAdmin):
+    actions = [the_interns_eat]
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Kot)
+admin.site.register(Kot, KotAdmin)

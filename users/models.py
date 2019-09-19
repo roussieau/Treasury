@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from bank.models import Transaction, Expense
+from supper.models import Day, Participation
+
+from datetime import datetime
+
 
 # Create your models here.
 class Kot(models.Model):
@@ -20,6 +24,16 @@ class Kot(models.Model):
             balance += e.cost
 
         return balance
+
+    def the_interns_eat(self):
+        firstDate = datetime.today()
+        internalUsers = CustomUser.objects.filter(internal=True, kot=self)
+        days = Day.objects.filter(date__gt=firstDate)
+        for user in internalUsers:
+            for day in days:
+                if not Participation.objects.filter(user=user, day=day).exists():
+                    Participation.objects.create(user=user, day=day)
+
 
 class CustomUser(AbstractUser):
     # add additional fields in here
