@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '19_awvan^ho+h^-o5sx5j*(zb!qb&v4%5j%u$+9v4tcxc(i8=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'users',
 
     'bootstrap4',
+    'debug_toolbar',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'treasury.urls'

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -35,3 +36,13 @@ urlpatterns = [
     path('users/password_change/done/', change_password_success, name='password_change_done'),
     path('users/', include('django.contrib.auth.urls')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns
