@@ -12,6 +12,7 @@ class Kot(models.Model):
     year = models.IntegerField(default=0)
     balance = models.IntegerField(default=0)
     password = models.CharField(default="password", max_length=30)
+    tricountOnly = models.BooleanField(default=False)
 
     def __str__(self):
         return '{} - {}'.format(self.name, self.year)

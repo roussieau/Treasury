@@ -29,7 +29,7 @@ def day(request, id):
         count += i.weight
 
     #Form management
-    form = DayExpenseForm(request.POST or None)
+    form = DayExpenseForm(request.user, request.POST or None)
     if form.is_valid():
         e = Expense()
         e.description = form.cleaned_data['description']
