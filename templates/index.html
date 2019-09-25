@@ -2,47 +2,52 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Julian Roussieau">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Julian Roussieau">
 
-    <link rel="icon" type="image/png" href="{% static 'img/bubulle.png' %}" />
+  <link rel="icon" type="image/png" href="{% static 'img/bubulle.png' %}" />
 
-    <title>Treasury</title>
+  <title>Treasury</title>
 
-    <!-- Bootstrap core CSS-->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Bootstrap core CSS-->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <!-- Custom fonts for this template-->
-    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'css/all.min.css' %}" rel="stylesheet" type="text/css">
 
-    <!-- Page level plugin CSS-->
-    <link href="{% static 'css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+  <!-- Page level plugin CSS-->
+  <link href="{% static 'css/dataTables.bootstrap4.css' %}" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="{% static 'css/sb-admin.min.css' %}" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="{% static 'css/sb-admin.min.css' %}" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-  </head>
+  <!-- Select2 module -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
 
-  <body id="page-top">
-    {% include 'nav.html' %}
 
-    <div id="wrapper">
+</head>
 
-      <!-- Sidebar -->
-      {% include 'sidebar.html' %}
+<body id="page-top">
+  {% include 'nav.html' %}
 
-      <div id="content-wrapper">
-        <div class="container-fluid">
-           
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <div id="content-wrapper">
+      <div class="container-fluid">
+
         {% block breadcrumb %}{% endblock %}
 
         {% block content %}{% endblock %}
@@ -63,6 +68,6 @@
     {% include 'load_scripts.html' %}
     {% block script %}{% endblock%}
 
-  </body>
+</body>
 
 </html>

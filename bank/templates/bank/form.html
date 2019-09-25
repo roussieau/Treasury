@@ -4,7 +4,7 @@
 {% block breadcrumb %}
 <ol class="breadcrumb">
 	<li class="breadcrumb-item">
-	  <a href="{% url 'index' %}">Home</a>
+		<a href="{% url 'index' %}">Home</a>
 	</li>
 	<li class="breadcrumb-item ">Banque</li>
 	<li class="breadcrumb-item active">{{page_name}}</li>
@@ -19,12 +19,20 @@
 {% else %}
 <h1>{{page_name}}</h1>
 <form action='.' method='post'>
-    {% csrf_token %}
-    {% bootstrap_form form%}
-    {% buttons %}    
-        <button type='submit' class='btn btn-primary btn-block'>Enregistrer</button>
-    {% endbuttons %}
+	{% csrf_token %}
+	{% bootstrap_form form%}
+	{% buttons %}
+	<button type='submit' class='btn btn-primary btn-block'>Enregistrer</button>
+	{% endbuttons %}
 </form>
 {% endif %}
 {% endblock%}
-
+{% block script %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#id_users").select2({
+			closeOnSelect: false
+		});
+	});
+</script>
+{% endblock%}
