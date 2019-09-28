@@ -95,15 +95,15 @@ def charts(request):
     names = []
     status = []
     colors = []
-    for user in listOfUsers:
-        transactions = Transaction.objects.filter(user=user)
+    for u in listOfUsers:
+        transactions = Transaction.objects.filter(user=u)
         user_balance = 0
         for transaction in transactions:
             if transaction.positive:
                 user_balance += transaction.cost
             else:
                 user_balance -= transaction.cost
-        names.append(user.get_full_name())
+        names.append(u.get_full_name())
         status.append(float(user_balance))
         colors.append('#33cc33') if user_balance > 0 else colors.append('#ff4d4d')
    
