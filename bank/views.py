@@ -91,20 +91,22 @@ def history_transactions_commu(request):
 
 @login_required
 def charts(request):
-    firstday = datetime.now() - timedelta(30)
-    label = []
-    value1 = []
-    value2 = []
-    for i in range(1,31):
-        currentDate = firstday + timedelta(i)
-        label.append("{: %d/%m/%y}".format(currentDate))
-        value1.append(int(balance_on_a_date(currentDate, request.user)))
-        value2.append(int(balance_on_a_date_expense(currentDate, request.user.kot)))
-    data = {
-        'label': label,
-        'value1': value1,
-        'value2': value2,
-    }
+    listOfUsers = CustomUser.objects.filter(kot=request.user.kot).order_by('first_name', 'last_name')
+    names = []
+    status = []
+    colors = []
+    for user in listOfUsers:
+        transactions = Transaction.objects.filter(user=user)
+        user_balance = 0
+        for transaction in transactions:
+            if transaction.positive:
+                user_balance += transaction.cost
+            else:
+                user_balance -= transaction.cost
+        names.append(user.get_full_name())
+        status.append(float(user_balance))
+        colors.append('#33cc33') if user_balance > 0 else colors.append('#ff4d4d')
+   
     return render(request, 'bank/charts.html', locals())
 
 def balance_on_a_date_expense(date, kot):
