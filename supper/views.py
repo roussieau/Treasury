@@ -57,6 +57,7 @@ def day(request, id):
         diff = dt(year=day.date.year, month=day.date.month, day=day.date.day, hour=16) - dt.today()
         remainingTime = "Il vous reste {} jours, {} heures et {} minutes pour vous décider".format(
             diff.days, diff.seconds //3600 , diff.seconds % 3600 // 60)
+    pricePerPerson = expensesTotal / count
     return render(request, 'supper/day.html', locals())
 
 @login_required()

@@ -15,7 +15,7 @@
 <h2>Souper du {{day.date}} (S{{day.week}})</h2>
 {% if expensesTotal > 0%}
 <div class="alert alert-info" role="alert">
-  Le souper a couté {{expensesTotal}} €
+  Le souper a couté {{expensesTotal}} € -- {{pricePerPerson}} € par personne
 </div>
 {% endif %}
 {% if remainingTime %}
