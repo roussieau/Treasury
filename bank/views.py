@@ -63,22 +63,14 @@ def expense_delete(request, id):
 @login_required
 def status(request):
     listOfUsers = CustomUser.objects.filter(kot=request.user.kot).order_by('first_name', 'last_name')
-    status = []
-    for user in listOfUsers:
-        transactions = Transaction.objects.filter(user=user)
-        user_balance = 0
-        for transaction in transactions:
-            if transaction.positive:
-                user_balance += transaction.cost
-            else:
-                user_balance -= transaction.cost
-        status.append({'name' : user.get_full_name(), 'balance' : user_balance})
-    return render(request, 'bank/status.html', {'status' : status})
+    status = compute_status(listOfUsers)
+    return render(request, 'bank/status.html', {'status': status})
 
 @login_required
 def history_of_my_transactions(request):
     listOfTransactions = request.user.get_transactions()
     paginator = Paginator(listOfTransactions, 20)
+    dept = compute_debt(listOfTransactions)
 
     page = request.GET.get('page')
     transactions = paginator.get_page(page)
@@ -106,16 +98,18 @@ def charts(request):
         names.append(u.get_full_name())
         status.append(float(user_balance))
         colors.append('#33cc33') if user_balance > 0 else colors.append('#ff4d4d')
-   
     return render(request, 'bank/charts.html', locals())
+
 
 def balance_on_a_date_expense(date, kot):
     listOfTransactions = Expense.objects.filter(date__lte=date, kot=kot)
     return sum_transactions(listOfTransactions)
 
+
 def balance_on_a_date(date, user):
     listOfTransactions = Transaction.objects.filter(expense__date__lte=date, user=user)
     return sum_transactions(listOfTransactions)
+
 
 def sum_transactions(listOfTransactions):
     balance = 0
@@ -125,3 +119,25 @@ def sum_transactions(listOfTransactions):
         else:
             balance -= t.cost
     return balance
+
+
+def compute_status(listOfUsers):
+    status = []
+    for user in listOfUsers:
+        transactions = Transaction.objects.filter(user=user)
+        user_balance = 0
+        for transaction in transactions:
+            if transaction.positive:
+                user_balance += transaction.cost
+            else:
+                user_balance -= transaction.cost
+        status.append({'name': user.get_full_name(), 'balance': user_balance})
+    return status
+
+
+def compute_debt(listOfTransactions):
+    count = 0
+    for t in listOfTransactions:
+        if not t.positive:
+            count += t.cost
+    return count
